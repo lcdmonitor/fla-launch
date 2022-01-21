@@ -31,3 +31,16 @@ function ListUsers()
         printf("%s&nbsp;%s&nbsp<br>", $row["UserID"], $row["FullName"]);
     }
 }
+
+function GetIsUserLoggedIn()
+{
+    if(isset($_SESSION["userid"])) 
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
