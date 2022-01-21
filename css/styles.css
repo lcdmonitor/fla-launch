@@ -206,7 +206,13 @@ footer .border-highlight{
 
 @media (min-height:640px) {
     .launch__content{
-        max-height: 500px; 
+        max-height: 550px; 
+    }  
+}
+
+@media (min-height:720px) {
+    .launch__content{
+        max-height: 600px; 
     }  
 }
 
