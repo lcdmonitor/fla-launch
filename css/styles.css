@@ -43,7 +43,7 @@ html{
     top:0;
     right:0;
     bottom: 0;
-    background-color: rgb(255,247,231);
+    background-color: var(--primary-color);
     z-index: 4;
 }
 
