@@ -53,11 +53,6 @@ AJAXform.prototype.XMLhttp = function (successCallback, failureCallback) {
     httpRequest.send(formData);
 }
 
-function openLoginModal(){
-    var myModal = new bootstrap.Modal(document.getElementById('loginModal'), {});
-    myModal.show();
-}
-
 function processLogin() {
     var forms = document.querySelectorAll('.needs-validation')
     Array.prototype.slice.call(forms)
