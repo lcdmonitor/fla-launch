@@ -19,6 +19,41 @@
         })
 })()
 
+
+/* AJAX Function */
+function AJAXform(formID, formMethod = 'post') {
+    this.formAction = document.getElementById(formID).getAttribute('action'); // Get the form action.
+    this.formInputs = document.getElementById(formID).querySelectorAll("input"); // Get the form inputs.
+    this.formMethod = formMethod;
+}
+
+AJAXform.prototype.XMLhttp = function () {
+    var httpRequest = new XMLHttpRequest();
+    var formData = new FormData();
+
+    for (var i = 0; i < this.formInputs.length; i++) {
+        formData.append(this.formInputs[i].name, this.formInputs[i].value); // Add all inputs inside formData().
+    }
+
+    httpRequest.onreadystatechange = function () {
+
+        if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status == 200) {
+                    //Do Something with a cool callback
+            }
+            else {
+                alert('Invalid Username or Password');
+                console.log(this.responseText);
+            }
+        }
+
+    };
+
+    alert('sending');
+    httpRequest.open(this.formMethod, this.formAction);
+    httpRequest.send(formData);
+}
+
 function processLogin() {
     var forms = document.querySelectorAll('.needs-validation')
     Array.prototype.slice.call(forms)
@@ -30,9 +65,11 @@ function processLogin() {
             else {
                 form.classList.add('was-validated');
 
-                /*submit login info here*/
+                var req = new AJAXform('loginForm');
+
+                req.XMLhttp();
             }
 
         });
-        return false;
+    return false;
 }

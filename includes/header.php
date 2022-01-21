@@ -64,17 +64,17 @@
     <!-- Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" action="login.php" id="loginForm" novalidate>
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="username" class="form-label">Login</label>
-                            <input type="username" class="form-control" id="username" aria-describedby="usernameHelp" required>
+                            <input type="username" class="form-control" id="username" name="username" aria-describedby="usernameHelp" required>
                             <div id="usernameHelp" class="form-text">username or email address</div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" required>
+                            <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                     </div>
                     <div class="modal-footer">
