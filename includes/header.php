@@ -30,7 +30,7 @@
                 <?php 
                 if(!isset($_SESSION["userid"])) 
                 {
-                    echo '<a class="text-decoration-none text-white fs-5 login-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>';
+                    echo '<a class="text-decoration-none text-white fs-5 login-link" onclick="return openLoginModal();">Login</a>';
                 }
                 else
                 {

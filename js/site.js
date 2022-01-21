@@ -53,6 +53,11 @@ AJAXform.prototype.XMLhttp = function (successCallback, failureCallback) {
     httpRequest.send(formData);
 }
 
+function openLoginModal(){
+    var myModal = new bootstrap.Modal(document.getElementById('loginModal'), {});
+    myModal.show();
+}
+
 function processLogin() {
     var forms = document.querySelectorAll('.needs-validation')
     Array.prototype.slice.call(forms)
@@ -66,7 +71,13 @@ function processLogin() {
 
                 var req = new AJAXform('loginForm');
 
-                req.XMLhttp(function () { alert('success'); }, function () { alert('fail'); });
+                req.XMLhttp(
+                    function () { /*success callback*/
+                        location.reload();
+                    }, 
+                    function () { /*failure callback*/
+                        alert('invalid username or password'); 
+                    });
             }
 
         });
