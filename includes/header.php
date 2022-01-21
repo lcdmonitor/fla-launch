@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florida Launch Alliance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header Start-->
+    <header class="header p-3 position-absolute start-0 top-0 end-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="/" class="text-decoration-none text-white fs-5 fw-bold">Florida Launch Alliance</a>
+
+            <div>
+                <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="toggle navigation"><i class="bi bi-list" style="font-size: 1rem;"></i></button>
+            </div>
+        </div>
+    </header>
+    <!-- Header End-->
+
+    <!-- navbar-->
+    <nav class="collapse navbar-collapse dropdown-nav" id="navbar">
+        <div class="container-xxl dropdown-nav__container">
+
+            <!--<ul>
+                <li><a href="" id="">Dave 1</a></li>
+                <li><a href="" id="">Dave 2</a></li>
+                <li><a href="" id="">Dave 3</a></li>
+                <li><a href="" id="">Dave 4</a></li>
+                <li><a href="" id="">Dave 5</a></li>
+                <li><a href="" id="">Dave 1</a></li>
+                <li><a href="" id="">Dave 1</a></li>
+                <li><a href="" id="">Dave 1</a></li>
+            </ul>-->
+
+            <div>
+                <button class="navbar-toggler navbar dropdown-nav__closeButton" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="toggle navigation"><i class="bi bi-x"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- navbar end-->
