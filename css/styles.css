@@ -59,6 +59,16 @@ html{
     padding: 0 1rem;
 }
 
+.login-link{
+    display: none;
+}
+
+@media (min-width: 420px) {
+    .login-link{
+        display: inline;
+    }
+}
+
 .hero{
     position: relative;
     height: 100vh;
