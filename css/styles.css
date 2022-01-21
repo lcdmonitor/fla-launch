@@ -47,6 +47,12 @@ html{
     z-index: 4;
 }
 
+.navbar__links{
+    position: absolute;
+    top:20px;
+    left: 16px;
+}
+
 .dropdown-nav__closeButton{
     position: absolute;
     top: 20px;
