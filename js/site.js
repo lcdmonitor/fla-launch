@@ -27,7 +27,7 @@ function AJAXform(formID, formMethod = 'post') {
     this.formMethod = formMethod;
 }
 
-AJAXform.prototype.XMLhttp = function () {
+AJAXform.prototype.XMLhttp = function (successCallback, failureCallback) {
     var httpRequest = new XMLHttpRequest();
     var formData = new FormData();
 
@@ -39,17 +39,16 @@ AJAXform.prototype.XMLhttp = function () {
 
         if (this.readyState === XMLHttpRequest.DONE) {
             if (this.status == 200) {
-                    //Do Something with a cool callback
+                successCallback();
             }
             else {
-                alert('Invalid Username or Password');
+                failureCallback();
                 console.log(this.responseText);
             }
         }
 
     };
 
-    alert('sending');
     httpRequest.open(this.formMethod, this.formAction);
     httpRequest.send(formData);
 }
@@ -67,7 +66,7 @@ function processLogin() {
 
                 var req = new AJAXform('loginForm');
 
-                req.XMLhttp();
+                req.XMLhttp(function () { alert('success'); }, function () { alert('fail'); });
             }
 
         });
