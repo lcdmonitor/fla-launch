@@ -187,27 +187,26 @@ footer .border-highlight{
 } 
 
 
-/* new page content*/
+/* launch page content*/
 .launch__content_container{
     z-index: 1;
 }
 
 .launch__content{
     max-width: 1200px; 
-    max-height: 350px; 
+    max-height: 200px; 
     overflow-y: auto;
+}
+
+@media (min-height:370px) {
+    .launch__content{
+        max-height: 250px; 
+    }  
 }
 
 @media (min-height:640px) {
     .launch__content{
         max-height: 500px; 
-    }  
-}
-
-
-@media (min-height:800px) {
-    .launch__content{
-        max-height: 700px; 
     }  
 }
 
