@@ -12,7 +12,9 @@
         $password=$_POST['password'];
     }
 
-    if($username == "dave" and $password == "xyz123"){
+    if($username == "dave" and $password == "xyz123"){ /*login successful*/
+            session_start();
+            $_SESSION["userid"] = $username;
             exit();
     }
     else{
