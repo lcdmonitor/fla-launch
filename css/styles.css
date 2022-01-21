@@ -177,7 +177,7 @@ footer .border-highlight{
 } 
 
 
-/* launch page content*/
+/* new page content*/
 .launch__content_container{
     z-index: 1;
 }
@@ -208,3 +208,37 @@ footer .border-highlight{
 }
 
 /* end launches page content */
+
+
+
+/* news page content*/
+.news__content_container{
+    z-index: 1;
+}
+
+.news__content{
+    max-width: 1200px; 
+    max-height: 350px; 
+    overflow-y: auto;
+}
+
+@media (min-height:640px) {
+    .news__content{
+        max-height: 500px; 
+    }  
+}
+
+
+@media (min-height:800px) {
+    .news__content{
+        max-height: 700px; 
+    }  
+}
+
+@media (min-height:900px) {
+    .news__content{
+        max-height: 800px; 
+    }  
+}
+
+/* end newses page content */
