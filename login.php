@@ -1,24 +1,26 @@
 <?php
-    $username=null;
-    $password=null;
+include('./includes/functions.inc.php');
 
-    if(isset($_POST['username']))
-    {
-        $username=$_POST['username'];
-    }
+$username = null;
+$password = null;
 
-    if(isset($_POST['password']))
-    {
-        $password=$_POST['password'];
-    }
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+}
 
-    if($username == "dave" and $password == "xyz123"){ /*login successful*/
-            session_start();
-            $_SESSION["userid"] = $username;
-            exit();
-    }
-    else{
-        echo "invalid username/password";
-        http_response_code(403);
-    }
-?>
+if (isset($_POST['password'])) {
+    $password = $_POST['password'];
+}
+
+$loginResult=ValidateLogin($username, $password);
+
+if (!$loginResult) { /*login failed*/
+    echo "invalid username/password";
+    http_response_code(403);
+    exit;
+} else { /*login success*/
+    session_start();
+    $_SESSION["UserID"] = $loginResult["UserID"];
+    $_SESSION["FullName"] = $loginResult["FullName"];
+    $_SESSION["RoleID"] = $loginResult["RoleID"];
+}
