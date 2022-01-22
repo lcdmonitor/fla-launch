@@ -22,9 +22,9 @@ function ListRoles()
 {
     $mysqli = GetDBConnection();
 
-    $query = "Select RoleID, Rolename from web.Role";
+    $query = "Select RoleID, Rolename from Role";
 
-    $result = mysqli_query($mysqli, $query);
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
 
     while ($row = mysqli_fetch_assoc($result)) {
         printf("%s&nbsp;%s&nbsp<br>", $row["RoleID"], $row["Rolename"]);
@@ -39,7 +39,7 @@ function CreateUser($username, $fullname, $email, $password, $roleid)
 
     $mysqli = GetDBConnection();
 
-    $sql = "INSERT INTO web.User (Username, FullName , Email, PasswordHash, RoleID) VALUES ( ?, ?, ?, ?, ? )";
+    $sql = "INSERT INTO User (Username, FullName , Email, PasswordHash, RoleID) VALUES ( ?, ?, ?, ?, ? )";
 
     $stmt = mysqli_stmt_init($mysqli);
 
@@ -60,13 +60,14 @@ function CreateUser($username, $fullname, $email, $password, $roleid)
 
 function ValidateLogin($userIdOrEmail, $password)
 {
+
     if (!isset($userIdOrEmail) || !isset($password)) {
         die("Error missing parameter value");
     }
 
     $mysqli = GetDBConnection();
 
-    $sql = "SELECT UserID, FullName, RoleID, PasswordHash FROM web.User WHERE (Username = ? OR Email = ?)";
+    $sql = "SELECT UserID, FullName, RoleID, PasswordHash FROM User WHERE (Username = ? OR Email = ?)";
 
     $stmt = mysqli_stmt_init($mysqli);
 
@@ -76,9 +77,11 @@ function ValidateLogin($userIdOrEmail, $password)
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
     mysqli_stmt_bind_param($stmt, 'ss', $userIdOrEmail, $userIdOrEmail);
+
     mysqli_stmt_execute($stmt);
-    
+
     $resultData = mysqli_stmt_get_result($stmt);
+
     $result = false;
     
     if ($row = mysqli_fetch_assoc($resultData)) {
