@@ -1,14 +1,14 @@
 <?php require('./includes/header.php'); ?>
-<!--news Section-->
+<!--education Section-->
 <section class="hero">
     <div class="hero__overlay"></div>
     <video playsinline="true" loop="loop" loading="lazy" autoplay="autoplay" muted="muted" class="hero__video">
         <source src="img/background.mp4" type="video/mp4">
     </video>
-    <div class="h-100 container-custom position-relative news__content_container">
-        <div class="d-flex h-100 align-items-center news__content-width">
-            <div class="text-black bg-light p-5 rounded-3 news__content">
-                <h1 class="news__heading">The News</h1>
+    <div class="h-100 container-custom position-relative education__content_container">
+        <div class="d-flex h-100 align-items-center education__content-width">
+            <div class="text-black bg-light p-5 rounded-3 education__content">
+                <h1 class="education__heading">Mission: Education</h1>
                 <p>Bringing North Florida one step closer to the stars...</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore voluptatum earum possimus, ipsum atque sint, vel iusto impedit non architecto, tempora saepe quos quia id accusantium. Fugit nesciunt explicabo dolore!</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dignissimos magni culpa labore dolor dolorum ipsam, totam eum debitis quo pariatur nihil omnis excepturi ullam magnam nostrum, reiciendis fugiat esse?</p>

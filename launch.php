@@ -8,7 +8,7 @@
     <div class="h-100 container-custom position-relative launch__content_container">
         <div class="d-flex h-100 align-items-center launch__content-width">
             <div class="text-black bg-light p-5 rounded-3 launch__content">
-                <h1 class="launch__heading">Scheduled Launches</h1>
+                <h1 class="launch__heading">Mission: Launches</h1>
                 <p>Bringing North Florida one step closer to the stars...</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore voluptatum earum possimus, ipsum atque sint, vel iusto impedit non architecto, tempora saepe quos quia id accusantium. Fugit nesciunt explicabo dolore!</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dignissimos magni culpa labore dolor dolorum ipsam, totam eum debitis quo pariatur nihil omnis excepturi ullam magnam nostrum, reiciendis fugiat esse?</p>

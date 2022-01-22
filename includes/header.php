@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('./includes/functions.inc.php')
+    require('./includes/functions.inc.php');
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,26 +45,7 @@ require('./includes/functions.inc.php')
     </header>
     <!-- Header End-->
 
-    <!-- navbar-->
-    <nav class="collapse navbar-collapse dropdown-nav" id="navbar">
-        <div class="container-xxl dropdown-nav__container text-white">
-            <div class="navbar__links">
-                <ul>
-                    <?php if (!GetIsUserLoggedIn()) { ?>
-                        <li><a class="text-decoration-none text-white fs-5" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
-                    <?php } else { ?>
-                        <li><a class="text-decoration-none text-white fs-5" href="logout.php">Logout</a></li>
-                    <?php } ?>
-                </ul>
-            </div>
-            <div>
-                <button class="navbar-toggler navbar dropdown-nav__closeButton text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="toggle navigation"><i class="bi bi-x"></i></button>
-            </div>
-
-        </div>
-    </nav>
-
-    <!-- navbar end-->
+    <?php include('./includes/navbar.php') ?>
 
     <!-- login modal -->
     <!-- Modal -->
