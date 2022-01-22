@@ -64,7 +64,7 @@
                         neque excepturi animi rerum. Sint cumque voluptatum, dicta, nobis consequatur tenetur voluptates
                         dolorem odit voluptatibus, rem accusantium veritatis.
                     </p>
-                    <a href="launch.php">Read More <i class="bi bi-arrow-right"></i></a>
+                    <a href="/launch.php">Read More <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -80,13 +80,13 @@
             <div class="col-12 col-sm-6 align-self-center justify-content-md-center">
                 <div class="content_sections__content-width">
                     <span>Mission:</span>
-                    <h1 class="h2 mb-4">Outreach</h1>
+                    <h1 class="h2 mb-4">Education</h1>
                     <p class="mb-4">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem inventore voluptatibus veritatis
                         neque excepturi animi rerum. Sint cumque voluptatum, dicta, nobis consequatur tenetur voluptates
                         dolorem odit voluptatibus, rem accusantium veritatis.
                     </p>
-                    <a href="#">Read More <i class="bi bi-arrow-right"></i></a>
+                    <a href="/education.php">Read More <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                         neque excepturi animi rerum. Sint cumque voluptatum, dicta, nobis consequatur tenetur voluptates
                         dolorem odit voluptatibus, rem accusantium veritatis.
                     </p>
-                    <a href="#">Read More <i class="bi bi-arrow-right"></i></a>
+                    <a href="/high_power.php">Read More <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>

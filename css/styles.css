@@ -47,6 +47,10 @@ html{
     z-index: 4;
 }
 
+.nav-space{
+    padding-right: 1rem;
+}
+
 .navbar__links{
     position: absolute;
     top:20px;
@@ -193,12 +197,36 @@ footer .border-highlight{
 } 
 
 
-/* launch page content*/
+/* page content*/
 .launch__content_container{
+    z-index: 1;
+}
+.news__content_container{
+    z-index: 1;
+}
+.education__content_container{
+    z-index: 1;
+}
+.power__content_container{
     z-index: 1;
 }
 
 .launch__content{
+    max-width: 1200px; 
+    max-height: 200px; 
+    overflow-y: auto;
+}
+.news__content{
+    max-width: 1200px; 
+    max-height: 200px; 
+    overflow-y: auto;
+}
+.education__content{
+    max-width: 1200px; 
+    max-height: 200px; 
+    overflow-y: auto;
+}
+.power__content{
     max-width: 1200px; 
     max-height: 200px; 
     overflow-y: auto;
@@ -208,10 +236,28 @@ footer .border-highlight{
     .launch__content{
         max-height: 250px; 
     }  
+    .news__content{
+        max-height: 250px; 
+    }  
+    .education__content{
+        max-height: 250px; 
+    }  
+    .power__content{
+        max-height: 250px; 
+    }  
 }
 
 @media (min-height:640px) {
     .launch__content{
+        max-height: 550px; 
+    }  
+    .news__content{
+        max-height: 550px; 
+    }  
+    .education__content{
+        max-height: 550px; 
+    }  
+    .power__content{
         max-height: 550px; 
     }  
 }
@@ -220,46 +266,32 @@ footer .border-highlight{
     .launch__content{
         max-height: 600px; 
     }  
+    .news__content{
+        max-height: 600px;
+    }  
+    .education__content{
+        max-height: 600px;
+    }  
+    .power__content{
+        max-height: 600px;
+    } 
 }
 
 @media (min-height:900px) {
     .launch__content{
         max-height: 800px; 
     }  
+    .news__content{
+        max-height: 800px;
+    }  
+    .education__content{
+        max-height: 800px;
+    }  
+    .power__content{
+        max-height: 800px;
+    } 
 }
 
 /* end launches page content */
 
 
-
-/* news page content*/
-.news__content_container{
-    z-index: 1;
-}
-
-.news__content{
-    max-width: 1200px; 
-    max-height: 350px; 
-    overflow-y: auto;
-}
-
-@media (min-height:640px) {
-    .news__content{
-        max-height: 500px; 
-    }  
-}
-
-
-@media (min-height:800px) {
-    .news__content{
-        max-height: 700px; 
-    }  
-}
-
-@media (min-height:900px) {
-    .news__content{
-        max-height: 750px; 
-    }  
-}
-
-/* end newses page content */

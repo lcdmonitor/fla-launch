@@ -1,5 +1,5 @@
 <?php
-include_once('./includes/config.inc.php');
+include_once('./_config/config.inc.php');
 
 
 function printSiteName()
