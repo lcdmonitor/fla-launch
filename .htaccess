@@ -1,0 +1,15 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^/?pages/(.*?)/?$ /pages/contentpage.php?pageid=$1 [L]
+
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /pages/contentpage\.php\?pageid=([^\&\ ]+)
+#RewriteRule ^/?contentpage\.php$ /pages/%1? [L]
+RewriteRule ^/?contentpage\.php$ /pages/%1?
+
+
+#Rewrite to clean urls
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^([^.]+)$ $1.php [NC,L]

@@ -64,7 +64,7 @@
                         neque excepturi animi rerum. Sint cumque voluptatum, dicta, nobis consequatur tenetur voluptates
                         dolorem odit voluptatibus, rem accusantium veritatis.
                     </p>
-                    <a href="/launch.php">Read More <i class="bi bi-arrow-right"></i></a>
+                    <a href="/launch">Read More <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                         neque excepturi animi rerum. Sint cumque voluptatum, dicta, nobis consequatur tenetur voluptates
                         dolorem odit voluptatibus, rem accusantium veritatis.
                     </p>
-                    <a href="/education.php">Read More <i class="bi bi-arrow-right"></i></a>
+                    <a href="/education">Read More <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                         neque excepturi animi rerum. Sint cumque voluptatum, dicta, nobis consequatur tenetur voluptates
                         dolorem odit voluptatibus, rem accusantium veritatis.
                     </p>
-                    <a href="/high_power.php">Read More <i class="bi bi-arrow-right"></i></a>
+                    <a href="/high-power">Read More <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
         </div>

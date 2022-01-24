@@ -35,7 +35,7 @@
                 <?php if (!GetIsUserLoggedIn()) { ?>
                     <a class="text-decoration-none text-white fs-5 login-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                 <?php } else { ?>
-                    <a class="text-decoration-none text-white fs-5 login-link" href="/logout.php">Logout</a>
+                    <a class="text-decoration-none text-white fs-5 login-link" href="/logout">Logout</a>
                 <?php } ?>
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="toggle navigation">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">

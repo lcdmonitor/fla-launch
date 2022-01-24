@@ -7,13 +7,13 @@
                         <a class="nav-link fs-5" href="/"><i class="bi bi-house-door-fill nav-space"></i>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-5" href="/launch.php"><i class="bi bi-stars nav-space"></i>Launches</a>
+                        <a class="nav-link fs-5" href="/launch"><i class="bi bi-stars nav-space"></i>Launches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-5" href="/news.php"><i class="bi bi-newspaper nav-space"></i>News</a>
+                        <a class="nav-link fs-5" href="/news"><i class="bi bi-newspaper nav-space"></i>News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-5" href="/education.php"><i class="bi bi-book nav-space"></i>Education</a>
+                        <a class="nav-link fs-5" href="/education"><i class="bi bi-book nav-space"></i>Education</a>
                     </li>
                     <?php if (!GetIsUserLoggedIn()) { ?>
                         <li>
@@ -21,10 +21,10 @@
                         </li>
                     <?php } else { ?>
                         <li>
-                            <a class="nav-link fs-5" href="/account/account.php"><i class="bi bi-person-circle nav-space"></i>Account</a>
+                            <a class="nav-link fs-5" href="/account/account"><i class="bi bi-person-circle nav-space"></i>Account</a>
                         </li>
                         <li>
-                            <a class="nav-link fs-5" href="/logout.php"><i class="bi bi-box-arrow-left nav-space"></i>Logout</a>
+                            <a class="nav-link fs-5" href="/logout"><i class="bi bi-box-arrow-left nav-space"></i>Logout</a>
                         </li>
                     <?php } ?>
                 </ul>
