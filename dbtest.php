@@ -4,7 +4,7 @@
 
 <?php
 
-echo "Today is " . date("Y/m/d") . "<br>";
+echo "Today is " . date("l, Y/m/d") . "<br>";
 
 $parser = new JBBCode\Parser();
 $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
