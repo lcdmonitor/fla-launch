@@ -7,9 +7,9 @@
                 </a>
             </div>
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex text-white">
-                <li class="ms-3"><a href="#" class="text-muted"><i class="bi bi-twitter"></i> </a></li>
-                <li class="ms-3"><a href="#" class="text-muted"><i class="bi bi-instagram"></i> </a></li>
-                <li class="ms-3"><a href="#" class="text-muted"><i class="bi bi-facebook"></i> </a></li>
+                <li class="ms-3"><a href="https://twitter.com/flalaunch" class="text-muted" target="_blank"><i class="bi bi-twitter"></i> </a></li>
+                <li class="ms-3"><a href="https://www.instagram.com/flalaunch/" class="text-muted" target="_blank"><i class="bi bi-instagram"></i> </a></li>
+                <li class="ms-3"><a href="https://www.facebook.com/flalaunch/" class="text-muted" target="_blank"><i class="bi bi-facebook"></i> </a></li>
             </ul>
         </div>
     </footer>
