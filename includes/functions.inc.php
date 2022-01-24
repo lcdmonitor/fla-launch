@@ -1,5 +1,14 @@
 <?php
-include_once('./_config/config.inc.php');
+function GetIsUserLoggedIn()
+{
+    if (isset($_SESSION["UserID"])) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+include_once($_SERVER['DOCUMENT_ROOT'] .'/_config/config.inc.php');
 
 
 function printSiteName()
@@ -101,11 +110,3 @@ function ValidateLogin($userIdOrEmail, $password)
     return $result;
 }
 
-function GetIsUserLoggedIn()
-{
-    if (isset($_SESSION["UserID"])) {
-        return true;
-    } else {
-        return false;
-    }
-}

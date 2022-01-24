@@ -1,1 +1,1 @@
-<?php require_once("./includes/jBBCode-1.3.0/JBBCode/Parser.php"); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] ."/includes/jBBCode-1.3.0/JBBCode/Parser.php"); ?>

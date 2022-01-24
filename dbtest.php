@@ -1,5 +1,5 @@
-<?php require('./includes/functions.inc.php'); ?>
-<?php require('./includes/bbcode.inc.php'); ?>
+<?php require($_SERVER['DOCUMENT_ROOT'] .'/includes/functions.inc.php'); ?>
+<?php require($_SERVER['DOCUMENT_ROOT'] .'/includes/bbcode.inc.php'); ?>
 
 
 <?php
