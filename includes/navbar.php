@@ -21,6 +21,9 @@
                         </li>
                     <?php } else { ?>
                         <li>
+                            <a class="nav-link fs-5" href="/account/account.php"><i class="bi bi-person-circle nav-space"></i>Account</a>
+                        </li>
+                        <li>
                             <a class="nav-link fs-5" href="/logout.php"><i class="bi bi-box-arrow-left nav-space"></i>Logout</a>
                         </li>
                     <?php } ?>

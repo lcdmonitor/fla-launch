@@ -1,9 +1,9 @@
-<?php require('./includes/header.php'); ?>
+<?php require($_SERVER['DOCUMENT_ROOT'] .'/includes/header.php'); ?>
 <!--launch Section-->
 <section class="hero">
     <div class="hero__overlay"></div>
     <video playsinline="true" loop="loop" loading="lazy" autoplay="autoplay" muted="muted" class="hero__video">
-        <source src="img/background.mp4" type="video/mp4">
+        <source src="/img/background.mp4" type="video/mp4">
     </video>
     <div class="h-100 container-custom position-relative launch__content_container">
         <div class="d-flex h-100 align-items-center launch__content-width">
@@ -25,4 +25,4 @@
         </div>
     </div>
 </section>
-<?php require('./includes/footer.php'); ?>
+<?php require($_SERVER['DOCUMENT_ROOT'] .'/includes/footer.php'); ?>

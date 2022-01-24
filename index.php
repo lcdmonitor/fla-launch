@@ -28,7 +28,7 @@
     <section class="hero">
         <div class="hero__overlay"></div>
         <video playsinline="true" loop="loop" loading="lazy" autoplay="autoplay" muted="muted" class="hero__video">
-            <source src="img/background.mp4" type="video/mp4">
+            <source src="/img/background.mp4" type="video/mp4">
         </video>
         <div class="hero__content h-100 container-custom position-relative">
             <div class="d-flex h-100 align-items-center hero__content-width">
@@ -52,7 +52,7 @@
     <section class="content_sections container-custom">
         <div class="row">
             <div class="col-12 col-sm-6 d-md-flex justify-content-md-center">
-                <img src="img/shuttle.jpg" class="img-fluid pb-4 content_section_thumbnail" height="470" width="300"
+                <img src="/img/shuttle.jpg" class="/img-fluid pb-4 content_section_thumbnail" height="470" width="300"
                     loading="lazy" />
             </div>
             <div class="col-12 col-sm-6 align-self-center justify-content-md-center">
@@ -74,7 +74,7 @@
     <section class="content_sections container-custom content--background">
         <div class="row">
             <div class="col-12 col-sm-6 d-md-flex justify-content-md-center order-sm-1">
-                <img src="img/shuttle.jpg" class="img-fluid pb-4 content_section_thumbnail" height="470" width="300"
+                <img src="/img/shuttle.jpg" class="/img-fluid pb-4 content_section_thumbnail" height="470" width="300"
                     loading="lazy" />
             </div>
             <div class="col-12 col-sm-6 align-self-center justify-content-md-center">
@@ -96,7 +96,7 @@
     <section class="content_sections container-custom">
         <div class="row">
             <div class="col-12 col-sm-6 d-md-flex justify-content-md-center">
-                <img src="img/shuttle.jpg" class="img-fluid pb-4 content_section_thumbnail" height="470" width="300"
+                <img src="/img/shuttle.jpg" class="/img-fluid pb-4 content_section_thumbnail" height="470" width="300"
                     loading="lazy" />
             </div>
             <div class="col-12 col-sm-6 align-self-center justify-content-md-center">
@@ -114,4 +114,4 @@
         </div>
     </section>
     <!-- Section 3 End-->
-<?php require('./includes/footer.php'); ?>
+<?php require($_SERVER['DOCUMENT_ROOT'] .'/includes/footer.php'); ?>

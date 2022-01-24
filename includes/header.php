@@ -1,6 +1,8 @@
 <?php
-    require('./includes/functions.inc.php');
-    session_start();
+    require($_SERVER['DOCUMENT_ROOT'] .'/includes/functions.inc.php');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Florida Launch Alliance</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!-- bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -45,7 +47,7 @@
     </header>
     <!-- Header End-->
 
-    <?php include('./includes/navbar.php') ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'] .'/includes/navbar.php') ?>
 
     <!-- login modal -->
     <!-- Modal -->
