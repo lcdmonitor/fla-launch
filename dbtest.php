@@ -3,6 +3,9 @@
 
 
 <?php
+
+echo "Today is " . date("Y/m/d") . "<br>";
+
 $parser = new JBBCode\Parser();
 $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
 
