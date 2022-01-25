@@ -1,5 +1,11 @@
 RewriteEngine on
 
+#redirect to https
+RewriteCond %{SERVER_PORT} 80
+RewriteCond %{HTTP_HOST} ^(www\.)?flalaunch\.com
+RewriteRule ^(.*)$ https://www.flalaunch.com/$1 [R,L]
+
+#page rewrite for SEO friendly url for content
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^/?pages/(.*?)/?$ /pages/contentpage.php?pageid=$1 [L]
@@ -9,7 +15,7 @@ RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /pages/contentpage\.php\?pageid=([^\&\ ]
 RewriteRule ^/?contentpage\.php$ /pages/%1?
 
 
-#Rewrite to clean urls
+#Rewrite to clean urls without .php
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
