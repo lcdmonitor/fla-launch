@@ -1,5 +1,4 @@
 <?php 
-    require($_SERVER['DOCUMENT_ROOT'] .'/includes/auth.inc.php'); 
     require($_SERVER['DOCUMENT_ROOT'] .'/includes/header.php'); 
 ?>
 <!--launch Section-->
