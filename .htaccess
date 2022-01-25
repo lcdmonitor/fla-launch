@@ -1,9 +1,9 @@
 RewriteEngine on
 
-#redirect to https
-RewriteCond %{SERVER_PORT} 80
-RewriteCond %{HTTP_HOST} ^(www\.)?flalaunch\.com
-RewriteRule ^(.*)$ https://www.flalaunch.com/$1 [R,L]
+#redirect to https, uncomment next 3 lines for production
+#RewriteCond %{SERVER_PORT} 80
+#RewriteCond %{HTTP_HOST} ^(www\.)?flalaunch\.com
+#RewriteRule ^(.*)$ https://www.flalaunch.com/$1 [R,L]
 
 #page rewrite for SEO friendly url for content
 RewriteCond %{REQUEST_FILENAME} !-f
