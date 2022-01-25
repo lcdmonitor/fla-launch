@@ -12,7 +12,7 @@
         <div class="d-flex h-100 align-items-center launch__content-width">
             <div class="text-black bg-light p-5 rounded-3 launch__content">
                 <h1 class="launch__heading">Update your account:</h1>
-                <!-- Update CSS Classes, these refer to launch page -->
+                <!--TODO Update CSS Classes, these refer to launch page -->
         </div>
     </div>
 </section>
