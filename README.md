@@ -38,4 +38,7 @@ Before deploying to production environment with SSL you must uncomment the follo
 10. Content Managment - Dynamic News Content
 11. Content Mangement - Dynamic Front Page Content
 12. Security - Role Based Authorization
+13. Gallery - Upload
+14. Gallery - Manage
+15. Gallery - Display
 
