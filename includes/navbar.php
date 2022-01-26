@@ -21,7 +21,7 @@
                         </li>
                     <?php } else { ?>
                         <li>
-                            <a class="nav-link fs-5" href="/account/account"><i class="bi bi-person-circle nav-space"></i>Account</a>
+                            <a class="nav-link fs-5" href="/account/update"><i class="bi bi-person-circle nav-space"></i>Account</a>
                         </li>
                         <li>
                             <a class="nav-link fs-5" href="/logout"><i class="bi bi-box-arrow-left nav-space"></i>Logout</a>
