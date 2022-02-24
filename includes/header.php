@@ -59,7 +59,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="needs-validation" action="login" id="loginForm" novalidate>
+            <form class="needs-validation" action="/login" id="loginForm" novalidate>
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="mb-3">
