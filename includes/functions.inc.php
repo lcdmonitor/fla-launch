@@ -118,6 +118,48 @@ function ValidateLogin($userIdOrEmail, $password)
     return $result;
 }
 
+function GetPageContent($pageid)
+{
+
+    if (!isset($pageid)) {
+        die("Error missing parameter value");
+    }
+
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT Title, PageKey, Summary, Content, MemberOnly FROM Page WHERE (PageKey = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $pageid);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+    
+    if ($row = mysqli_fetch_assoc($resultData)) {
+ 
+        $result = array(
+                    "Title"=>$row["Title"],
+                    "PageKey"=>$row["PageKey"],
+                    "Summary"=>$row["Summary"],
+                    "Content"=>$row["Content"],
+                    "MemberOnly"=>$row["MemberOnly"]
+                );
+
+    }
+   
+    mysqli_stmt_close($stmt);
+    
+    return $result;
+}
+
 function SendEmail($to, $to_name, $subject, $body, $alt_body)
 {
     $mail = new PHPMailer(true);

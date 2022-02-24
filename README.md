@@ -34,12 +34,14 @@ Before deploying to production environment with SSL you must uncomment the follo
 5. Account Management - Reset Password
 6. Account Managmeent - Update Profile
 7. Security - # of Failed Login attempts
-8. Content Management - Create Dynamic Page Content with BBCode and CSS Support (Need to find WYSIWYG BBCode Editor)
-9. Content Management - Role Based Content (Public vs Members Only)
-10. Content Managment - Dynamic News Content
-11. Content Mangement - Dynamic Front Page Content
-12. Security - Role Based Authorization
-13. Gallery - Upload
-14. Gallery - Manage
-15. Gallery - Display
+8. ~~Content Management - Disply Dynamic Page Conent
+9. Content Management - Create/Edit Dynamic Page Content with BBCode and CSS Support (Need to find WYSIWYG BBCode Editor)
+10. Content Management - Role Based Content (Public vs Members Only)
+11. Content Managment - Dynamic News Content
+12. Content Mangement - Dynamic Front Page Content
+13. Security - Role Based Authorization
+14. General - CSS Cleanup
+15. Gallery - Upload
+16. Gallery - Manage
+17. Gallery - Display
 
