@@ -20,4 +20,10 @@ print $parser->getAsHTML();
 print '<br>';
 
 ListRoles();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+SendEmail("dave@davidtsimmons.com","Dave Simmons", "Test Email from FLA Suppport","FLA was here in <b>Bold</b>", "Dave Was here");
+}
 ?>
+
+<form action="dbtest.php" method="POST"><input type="submit" value="Send Email"></form>
