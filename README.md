@@ -26,7 +26,7 @@ Before deploying to production environment with SSL you must uncomment the follo
 `#RewriteRule ^(.*)$ https://www.flalaunch.com/$1 [R,L`
 
 ## TODO List
-0. General - Email Capability
+~~0. General - Email Capability
 1. User Management - Member Registration
 2. User Management - Role Management
 3. User Management - Role Enum and Admin Auth
