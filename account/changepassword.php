@@ -23,9 +23,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         else
         {
-            //TODO VALIDATE AND set password AND add confirm validation to html/js
-            $msg = "Password Changed Successfully";
-            $isError = false;
+            if($newPassword != $newPasswordConfirm)
+            {
+                $msg = "Password and Confirmation Do Not Match";
+            }
+            else
+            {
+                if(!IsGoodPassword($newPassword))
+                {
+                    $msg = "New Password is invalid, please use password of 8 or more in length";
+                }
+                else
+                {
+                    ChangePassword($_SESSION["Username"], $newPassword);
+                    //TODO VALIDATE AND set password AND add confirm validation to html/js
+                    $msg = "Password Changed Successfully";
+                    $isError = false;
+                }
+            }
         }
 }
 
@@ -45,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="success-message"><?php echo $msg; ?></div>
                 <?php } ?>
                 <!--TODO Update CSS Classes, these refer to launch page -->
-                <form class="needs-validation" method="POST" action="changepassword">
+                <form class="needs-validation" method="POST" action="changepassword" novalidate>
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" class="form-control" id="currentPassword" name="currentPassword" aria-describedby="currentPasswordHelp" required>
