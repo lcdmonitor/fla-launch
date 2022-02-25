@@ -75,6 +75,33 @@ function CreateUser($username, $fullname, $email, $password, $roleid)
     }
 }
 
+function ChangePassword($username, $password)
+{
+    if (!isset($username) || !isset($password)) {
+        die("Error missing parameter value");
+    }
+
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE USER SET PasswordHash = ? WHERE Username = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed");
+    }
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    mysqli_stmt_bind_param($stmt, 'ss', $hash, $username);
+    $success = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    if (!$success) {
+        die("Error: Error Updating Password");
+    }
+}
+
 function ValidateLogin($userIdOrEmail, $password)
 {
 
@@ -117,6 +144,11 @@ function ValidateLogin($userIdOrEmail, $password)
     mysqli_stmt_close($stmt);
     
     return $result;
+}
+
+function IsGoodPassword($password)
+{
+    return strlen($password) > 8;
 }
 
 function GetPageContent($pageid)
