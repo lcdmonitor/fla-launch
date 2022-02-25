@@ -45,4 +45,5 @@ Before deploying to production environment with SSL you must uncomment the follo
 16. Gallery - Upload
 17. Gallery - Manage
 18. Gallery - Display
+19. Email Infrastructure Configuration - Removed Hardcoded Values and add to config.inc.php
 
