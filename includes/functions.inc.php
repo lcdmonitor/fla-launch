@@ -83,12 +83,12 @@ function ChangePassword($username, $password)
 
     $mysqli = GetDBConnection();
 
-    $sql = "UPDATE USER SET PasswordHash = ? WHERE Username = ?";
+    $sql = "UPDATE User SET PasswordHash = ? WHERE Username = ?";
 
     $stmt = mysqli_stmt_init($mysqli);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        die("Error: Statement Failed");
+        die("Error: Statement Failed". htmlspecialchars($mysqli->error));
     }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
