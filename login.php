@@ -23,4 +23,5 @@ if (!$loginResult) { /*login failed*/
     $_SESSION["UserID"] = $loginResult["UserID"];
     $_SESSION["FullName"] = $loginResult["FullName"];
     $_SESSION["RoleID"] = $loginResult["RoleID"];
+    $_SESSION["Username"] = $loginResult["Username"];
 }

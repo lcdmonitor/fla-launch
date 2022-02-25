@@ -84,7 +84,7 @@ function ValidateLogin($userIdOrEmail, $password)
 
     $mysqli = GetDBConnection();
 
-    $sql = "SELECT UserID, FullName, RoleID, PasswordHash FROM User WHERE (Username = ? OR Email = ?)";
+    $sql = "SELECT UserID, Username, FullName, RoleID, PasswordHash FROM User WHERE (Username = ? OR Email = ?)";
 
     $stmt = mysqli_stmt_init($mysqli);
 
@@ -108,7 +108,8 @@ function ValidateLogin($userIdOrEmail, $password)
             $result = array(
                         "UserID"=>$row["UserID"],
                         "FullName"=>$row["FullName"],
-                        "RoleID"=>$row["RoleID"]
+                        "RoleID"=>$row["RoleID"],
+                        "Username"=>$row["Username"]
                     );
         }
     }
