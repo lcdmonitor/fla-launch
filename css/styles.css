@@ -294,4 +294,9 @@ footer .border-highlight{
 
 /* end launches page content */
 
-
+.error-message{
+    color: red;
+}
+.success-message{
+    color: green;
+}
