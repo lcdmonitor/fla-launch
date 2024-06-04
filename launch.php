@@ -11,7 +11,7 @@
                 <h1 class="launch__heading">Mission: Launches</h1>
                 <p>Bringing North Florida one step closer to the stars...</p>
 
-                <p>Launches to commence this summery 2024, please stay tuned for information</p>
+                <p>Launches to commence this summer 2024, please stay tuned for information</p>
                 <h2>NAR Safety Code</h2>
                 <div class="text ">
 					<dl>
