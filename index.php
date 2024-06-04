@@ -47,9 +47,6 @@
                 <button type="button" class="mt-2 btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     News & Updates
                 </button>
-                <button type="button" class="mt-2 btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Launch Information
-                </button>
             </div>
         </div>
     </div>
