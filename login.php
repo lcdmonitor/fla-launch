@@ -13,7 +13,7 @@ if (isset($_POST['password'])) {
 }
 
 try {
-$loginResult=ValidateLogin($username, $password);
+    $loginResult=ValidateLogin($username, $password);
 }
 catch (Exception $e) {
     echo "Error: " . $e->getMessage();
