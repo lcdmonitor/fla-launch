@@ -13,6 +13,8 @@
 
 ## Deployment Notes && Must Do Steps
 
+Set these environment variables wherever the app runs (your MAMP setup locally, and production): FLA_DB_USER, FLA_DB_PASS, FLA_EMAIL_USER, FLA_EMAIL_PASSWORD (required, no fallback — app will fail without them), plus optional overrides FLA_DB_HOST, FLA_DB_NAME, FLA_DB_PORT, FLA_EMAIL_SERVER, FLA_EMAIL_FROM, FLA_EMAIL_FROM_NAME, FLA_EMAIL_DEBUG.
+
 ### .htaccess
 
 Before deploying to production environment with SSL you must uncomment the following lines:
