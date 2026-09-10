@@ -59,7 +59,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="needs-validation" action="/login" id="loginForm" novalidate>
+            <form class="needs-validation" method="POST" action="/login" id="loginForm" novalidate>
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="mb-3">
@@ -74,7 +74,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" type="submit" onclick="return processLogin();">Login</button>
+                        <button class="btn btn-primary" type="submit" onclick="return processLogin(event);">Login</button>
                     </div>
                 </div>
             </form>
