@@ -12,7 +12,14 @@ if (isset($_POST['password'])) {
     $password = $_POST['password'];
 }
 
+try {
 $loginResult=ValidateLogin($username, $password);
+}
+catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+    http_response_code(500);
+    exit;
+}
 
 if (!$loginResult) { /*login failed*/
     echo "invalid username/password";
