@@ -62,3 +62,7 @@ CREATE TABLE `LoginAttempt` (
 --changeset dave:7-update-admin-password
 UPDATE `User` SET `PasswordHash` = '$2y$10$ysnq4hHyBHFbeFI44gXp7OLXaAZHkp26AklicXOKON8p0UxNQ72.6' WHERE `Username` = 'admin';
 --rollback UPDATE `User` SET `PasswordHash` = '$2y$10$68lg9T5SR799.xeULJRN4etmuwmdZIWvd8qsblrNn4WmtZbBI6t0y' WHERE `Username` = 'admin';
+
+--changeset dave:8-seed-sample-page
+INSERT INTO `Page` (`Title`, `PageKey`, `Summary`, `Content`, `MemberOnly`) VALUES ('Sample Page', 'sample_page', 'A sample page used for testing content rendering.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 0);
+--rollback DELETE FROM `Page` WHERE `PageKey` = 'sample_page';
