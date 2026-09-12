@@ -27,6 +27,11 @@
                             <a class="nav-link fs-5" href="/logout"><i class="bi bi-box-arrow-left nav-space"></i>Logout</a>
                         </li>
                     <?php } ?>
+                    <?php if (GetIsUserLoggedIn() && $_SESSION["RoleID"] == ROLE_ADMIN) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link fs-5" href="/admin"><i class="bi bi-gear-fill nav-space"></i>Admin</a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
             <div>

@@ -78,3 +78,10 @@ function processLogin() {
         });
     return false;
 }
+
+function confirmDeletePage(pageId, pageKey) {
+    if (confirm('Delete page "' + pageKey + '"? This cannot be undone.')) {
+        document.getElementById('deletePageId').value = pageId;
+        document.getElementById('deletePageForm').submit();
+    }
+}

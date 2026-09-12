@@ -198,6 +198,10 @@ footer .border-highlight{
 
 
 /* page content*/
+.admin__content_container{
+    z-index: 1;
+}
+
 .launch__content_container{
     z-index: 1;
 }

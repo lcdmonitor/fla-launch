@@ -49,6 +49,10 @@ Before deploying to production, `.htaccess` has a commented-out HTTPS-redirect b
 
 **Administrative / Admin Task** features are in admin/ under the project root
 
+**Requirements**
+-- everything in admin/ should require ROLE_ADMIN
+-- all administrative pages should have a link back to admin/
+
 ## Application feature
 
 **Dynamic Content pages** contentpage.php serves up content in bbcode format from the Page table

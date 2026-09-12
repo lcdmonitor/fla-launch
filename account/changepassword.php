@@ -1,5 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php');
+RequireAuthentication();
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
 $isError = true;

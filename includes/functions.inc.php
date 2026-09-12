@@ -1,4 +1,7 @@
 <?php
+const ROLE_ADMIN = 1;
+const ROLE_MEMBER = 2;
+
 function GetIsUserLoggedIn()
 {
     if (isset($_SESSION["UserID"])) {
@@ -277,10 +280,124 @@ function GetPageContent($pageid)
                 );
 
     }
-   
+
     mysqli_stmt_close($stmt);
-    
+
     return $result;
+}
+
+function ListPages()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT PageID, PageKey, Summary, MemberOnly FROM Page";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $pages = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $pages[] = $row;
+    }
+
+    return $pages;
+}
+
+function GetPageById($pageId)
+{
+
+    if (!isset($pageId)) {
+        die("Error missing parameter value");
+    }
+
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT Title, PageKey, Summary, Content, MemberOnly FROM Page WHERE (PageID = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $pageId);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+
+        $result = array(
+                    "Title"=>$row["Title"],
+                    "PageKey"=>$row["PageKey"],
+                    "Summary"=>$row["Summary"],
+                    "Content"=>$row["Content"],
+                    "MemberOnly"=>$row["MemberOnly"]
+                );
+
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function CreatePage($title, $pageKey, $summary, $content, $memberOnly)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "INSERT INTO Page (Title, PageKey, Summary, Content, MemberOnly) VALUES (?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    $memberOnlyInt = $memberOnly ? 1 : 0;
+
+    mysqli_stmt_bind_param($stmt, 'ssssi', $title, $pageKey, $summary, $content, $memberOnlyInt);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function UpdatePageById($pageId, $title, $pageKey, $summary, $content, $memberOnly)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE Page SET Title = ?, PageKey = ?, Summary = ?, Content = ?, MemberOnly = ? WHERE PageID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    $memberOnlyInt = $memberOnly ? 1 : 0;
+
+    mysqli_stmt_bind_param($stmt, 'ssssii', $title, $pageKey, $summary, $content, $memberOnlyInt, $pageId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function DeletePageById($pageId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "DELETE FROM Page WHERE PageID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $pageId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 }
 
 function SendEmail($to, $to_name, $subject, $body, $alt_body)
