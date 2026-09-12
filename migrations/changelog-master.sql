@@ -41,3 +41,7 @@ CREATE TABLE `Page` (
     UNIQUE KEY `UK_Page_PageKey` (`PageKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --rollback DROP TABLE `Page`;
+
+--changeset dave:5-seed-admin-user
+INSERT INTO `User` (`UserID`, `Username`, `FullName`, `Email`, `PasswordHash`, `RoleID`) VALUES (1, 'admin', 'Administrator', 'support@flalaunch.com', '$2y$10$68lg9T5SR799.xeULJRN4etmuwmdZIWvd8qsblrNn4WmtZbBI6t0y', 1);
+--rollback DELETE FROM `User` WHERE `UserID` = 1;

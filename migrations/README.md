@@ -55,7 +55,7 @@ liquibase \
   --url="jdbc:mysql://${FLA_DB_HOST:-localhost}:${FLA_DB_PORT:-8889}/${FLA_DB_NAME:-web}" \
   --username="$FLA_DB_USER" \
   --password="$FLA_DB_PASS" \
-  rollback-count-sql --count=4
+  rollback-count-sql --count=5
 ```
 
 Roll back the whole thing (each changeset carries a `--rollback` statement):
@@ -67,7 +67,7 @@ liquibase \
   --url="jdbc:mysql://${FLA_DB_HOST:-localhost}:${FLA_DB_PORT:-8889}/${FLA_DB_NAME:-web}" \
   --username="$FLA_DB_USER" \
   --password="$FLA_DB_PASS" \
-  rollback-count --count=4
+  rollback-count --count=5
 ```
 
 ## Schema notes
@@ -75,3 +75,4 @@ liquibase \
 - `Role` seeds two rows (`1 = Admin`, `2 = Member`) — `User.RoleID` has a foreign key to `Role.RoleID`, so a role must exist before a user can reference it.
 - `Username` and `Email` are both `UNIQUE` on `User`, since login (`ValidateLogin()` in `includes/functions.inc.php`) accepts either interchangeably and expects each to resolve to at most one account.
 - All tables use `utf8mb4`/InnoDB. No app code depends on column *names* changing here — only types/constraints/charset were designed fresh.
+- Changeset 5 seeds one admin login: username `admin`, email `support@flalaunch.com`, RoleID 1 (Admin). The `PasswordHash` is a real bcrypt hash (`password_hash(..., PASSWORD_DEFAULT)`, verified to round-trip with `password_verify()`) — the plaintext is whatever was chosen when this migration was written; change it via the app's `ChangePassword()` flow after first login rather than reading it out of this file.
