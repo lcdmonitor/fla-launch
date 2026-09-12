@@ -624,6 +624,23 @@ function CreateGalleryPhoto($categoryId, $fileName, $thumbFileName)
     mysqli_stmt_close($stmt);
 }
 
+function UpdateGalleryCategorySortOrder($categoryId, $sortOrder)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE GalleryCategory SET SortOrder = ? WHERE CategoryID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ii', $sortOrder, $categoryId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
 function UpdatePhotoSortOrder($photoId, $sortOrder)
 {
     $mysqli = GetDBConnection();
