@@ -675,6 +675,36 @@ function DeleteGalleryPhotoById($photoId)
     mysqli_stmt_close($stmt);
 }
 
+function GetNewsAlertContent()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT Content FROM NewsAlert WHERE NewsAlertID = 1";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $row = mysqli_fetch_assoc($result);
+
+    return $row ? $row['Content'] : false;
+}
+
+function UpdateNewsAlertContent($content)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE NewsAlert SET Content = ? WHERE NewsAlertID = 1";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $content);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
 function SendEmail($to, $to_name, $subject, $body, $alt_body)
 {
     $mail = new PHPMailer(true);

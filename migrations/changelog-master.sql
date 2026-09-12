@@ -90,3 +90,20 @@ CREATE TABLE `GalleryPhoto` (
     CONSTRAINT `FK_GalleryPhoto_Category` FOREIGN KEY (`CategoryID`) REFERENCES `GalleryCategory` (`CategoryID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --rollback DROP TABLE `GalleryPhoto`;
+
+--changeset dave:11-create-newsalert-table
+CREATE TABLE `NewsAlert` (
+    `NewsAlertID` INT NOT NULL AUTO_INCREMENT,
+    `Content` LONGTEXT NOT NULL,
+    `UpdatedDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`NewsAlertID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `NewsAlert`;
+
+--changeset dave:12-seed-newsalert-content
+INSERT INTO `NewsAlert` (`NewsAlertID`, `Content`) VALUES (1, 'Exciting news from Florida Launch Alliance as we gear up to kickstart launch activities this summer. With a strategic focus on space exploration and satellite deployment, the alliance promises to usher in a new era of innovation and discovery. Leveraging Florida''s prime location for space launches, the alliance is poised to deliver cutting-edge missions and propel scientific advancements to new heights. Stay tuned as Florida Launch Alliance prepares to ignite the skies and inspire the world with their upcoming launch endeavors.');
+--rollback DELETE FROM `NewsAlert` WHERE `NewsAlertID` = 1;
+
+--changeset dave:13-update-newsalert-content
+UPDATE `NewsAlert` SET `Content` = 'Stay tuned for news from FLA' WHERE `NewsAlertID` = 1;
+--rollback UPDATE `NewsAlert` SET `Content` = 'Exciting news from Florida Launch Alliance as we gear up to kickstart launch activities this summer. With a strategic focus on space exploration and satellite deployment, the alliance promises to usher in a new era of innovation and discovery. Leveraging Florida''s prime location for space launches, the alliance is poised to deliver cutting-edge missions and propel scientific advancements to new heights. Stay tuned as Florida Launch Alliance prepares to ignite the skies and inspire the world with their upcoming launch endeavors.' WHERE `NewsAlertID` = 1;

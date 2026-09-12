@@ -32,7 +32,6 @@ Before deploying to production environment with SSL you must uncomment the follo
 4. Account Management - Update Account (Name, Email, etc)
 6. Account Management - Reset Password / Forgot Password
 7. Account Managmeent - Update Profile
-12. Content Managment - Dynamic News Content
 13. Content Mangement - Dynamic Front Page Content
 15. General - CSS Cleanup
 
