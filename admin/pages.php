@@ -46,6 +46,8 @@ $pages = ListPages();
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(GenerateCSRFToken(), ENT_QUOTES); ?>">
                     <input type="hidden" name="page_id" id="deletePageId" value="">
                 </form>
+
+                <a class="btn btn-secondary" href="/admin">Back to Admin Dashboard</a>
             </div>
         </div>
     </div>
