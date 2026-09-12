@@ -45,3 +45,20 @@ CREATE TABLE `Page` (
 --changeset dave:5-seed-admin-user
 INSERT INTO `User` (`UserID`, `Username`, `FullName`, `Email`, `PasswordHash`, `RoleID`) VALUES (1, 'admin', 'Administrator', 'support@flalaunch.com', '$2y$10$68lg9T5SR799.xeULJRN4etmuwmdZIWvd8qsblrNn4WmtZbBI6t0y', 1);
 --rollback DELETE FROM `User` WHERE `UserID` = 1;
+
+--changeset dave:6-create-loginattempt-table
+CREATE TABLE `LoginAttempt` (
+    `AttemptID` INT NOT NULL AUTO_INCREMENT,
+    `Username` VARCHAR(255) NOT NULL,
+    `IPAddress` VARCHAR(45) NOT NULL,
+    `AttemptTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `Successful` TINYINT(1) NOT NULL,
+    PRIMARY KEY (`AttemptID`),
+    KEY `IDX_LoginAttempt_Username_AttemptTime` (`Username`, `AttemptTime`),
+    KEY `IDX_LoginAttempt_IPAddress_AttemptTime` (`IPAddress`, `AttemptTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `LoginAttempt`;
+
+--changeset dave:7-update-admin-password
+UPDATE `User` SET `PasswordHash` = '$2y$10$ysnq4hHyBHFbeFI44gXp7OLXaAZHkp26AklicXOKON8p0UxNQ72.6' WHERE `Username` = 'admin';
+--rollback UPDATE `User` SET `PasswordHash` = '$2y$10$68lg9T5SR799.xeULJRN4etmuwmdZIWvd8qsblrNn4WmtZbBI6t0y' WHERE `Username` = 'admin';

@@ -8,6 +8,88 @@ function GetIsUserLoggedIn()
     }
 }
 
+function StartSecureSession()
+{
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        ini_set('session.use_strict_mode', '1');
+        ini_set('session.gc_maxlifetime', '1800'); // MAMP's php.ini ships 1440s, less than our 30min app timeout
+        session_set_cookie_params([
+            'lifetime' => 0,
+            'path'     => '/',
+            'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+        session_start();
+    }
+
+    $idleTimeoutSeconds = 1800; // 30 minutes
+
+    if (isset($_SESSION['LastActivity']) && (time() - $_SESSION['LastActivity']) > $idleTimeoutSeconds) {
+        session_unset();
+        session_destroy();
+        return;
+    }
+
+    $_SESSION['LastActivity'] = time();
+}
+
+function GenerateCSRFToken()
+{
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function ValidateCSRFToken($token)
+{
+    return isset($_SESSION['csrf_token']) && is_string($token) && hash_equals($_SESSION['csrf_token'], $token);
+}
+
+function RecordLoginAttempt($username, $ipAddress, $successful)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "INSERT INTO LoginAttempt (Username, IPAddress, Successful) VALUES (?, ?, ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed");
+    }
+
+    $successfulInt = $successful ? 1 : 0;
+
+    mysqli_stmt_bind_param($stmt, 'ssi', $username, $ipAddress, $successfulInt);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function IsLoginLocked($username, $ipAddress)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT COUNT(*) AS FailedCount FROM LoginAttempt
+            WHERE Successful = 0
+              AND AttemptTime > (NOW() - INTERVAL 15 MINUTE)
+              AND (Username = ? OR IPAddress = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ss', $username, $ipAddress);
+    mysqli_stmt_execute($stmt);
+
+    $row = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+    mysqli_stmt_close($stmt);
+
+    return ((int)$row['FailedCount']) >= 5;
+}
+
 include_once($_SERVER['DOCUMENT_ROOT'] .'/_config/config.inc.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -52,6 +134,10 @@ function CreateUser($username, $fullname, $email, $password, $roleid)
 {
     if (!isset($username) || !isset($fullname) || !isset($email) || !isset($password) || !isset($roleid)) {
         die("Error missing parameter value");
+    }
+
+    if (!IsGoodPassword($password)) {
+        die("Error: password does not meet minimum requirements (12+ characters)");
     }
 
     $mysqli = GetDBConnection();
@@ -119,7 +205,6 @@ function ValidateLogin($userIdOrEmail, $password)
         die("Error: Statement Failed to Prepare");
     }
 
-    $hash = password_hash($password, PASSWORD_DEFAULT);
     mysqli_stmt_bind_param($stmt, 'ss', $userIdOrEmail, $userIdOrEmail);
 
     mysqli_stmt_execute($stmt);
@@ -127,10 +212,10 @@ function ValidateLogin($userIdOrEmail, $password)
     $resultData = mysqli_stmt_get_result($stmt);
 
     $result = false;
-    
+
     if ($row = mysqli_fetch_assoc($resultData)) {
         $db_password_hash = $row["PasswordHash"];
-        
+
         if (password_verify($password, $db_password_hash)) {
             $result = array(
                         "UserID"=>$row["UserID"],
@@ -139,8 +224,13 @@ function ValidateLogin($userIdOrEmail, $password)
                         "Username"=>$row["Username"]
                     );
         }
+    } else {
+        // Run password_verify against a fixed, non-secret dummy hash so response time
+        // doesn't reveal whether the username exists (mitigates timing-based enumeration).
+        static $dummyHash = '$2y$10$ZxQR3VYmKG12R48V8zFhzORPh42IFAP50uEDTRLlJ3nP9wle/bADG';
+        password_verify($password, $dummyHash);
     }
-   
+
     mysqli_stmt_close($stmt);
     
     return $result;
@@ -148,7 +238,7 @@ function ValidateLogin($userIdOrEmail, $password)
 
 function IsGoodPassword($password)
 {
-    return strlen($password) > 8;
+    return strlen($password) >= 12;
 }
 
 function GetPageContent($pageid)

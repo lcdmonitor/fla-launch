@@ -44,24 +44,11 @@ Before deploying to production, `.htaccess` has a commented-out HTTPS-redirect b
 
 **Database Migrations and Scripts**: Mysql database, migrations packages need to be created for the following Schema using liquibase, ask clarifying questions and be sure to reiterate migrations commands, and prompt me before executing any migrations, migration packages should be stored migrations/ under the project root
 
-## Database Schema
 
-### Tables
+## Administrative Feature / Admin Tasks
 
-**Page**
-Columns:
-  `PageID` int(11) Primary Key Auto Increment
-  `Title` varchar(255) NOT NULL,
-  `PageKey` varchar(255) NOT NULL,
-  `Summary` varchar(255) NOT NULL,
-  `Content` longtext NOT NULL,
-  `MemberOnly` tinyint(4) NOT NULL DEFAULT '0'
+**Administrative / Admin Task** features are in admin/ under the project root
 
+## Application feature
 
- **User**
-Columns:
-  UserID int, Primary Key Auto Increment, 
-  Username varchar(255), 
-  FullName nvarchar(255), 
-  RoleID int default 0, 
-  PasswordHash varchar(255)
+**Dynamic Content pages** contentpage.php serves up content in bbcode format from the Page table

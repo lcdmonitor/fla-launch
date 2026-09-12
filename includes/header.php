@@ -1,8 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/functions.inc.php');
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+StartSecureSession();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,6 +69,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(GenerateCSRFToken(), ENT_QUOTES); ?>">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

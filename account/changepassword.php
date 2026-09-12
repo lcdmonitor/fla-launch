@@ -8,6 +8,13 @@ $isPost = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $isPost=true;
+
+        if(!ValidateCSRFToken($_POST['csrf_token'] ?? ''))
+        {
+            $msg = "Your session has expired or the request could not be verified. Please refresh the page and try again.";
+        }
+        else
+        {
         $currentPassword=$_POST["currentPassword"];
         $newPassword=$_POST["newPassword"];
         $newPasswordConfirm=$_POST["newPasswordConfirm"];
@@ -31,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             {
                 if(!IsGoodPassword($newPassword))
                 {
-                    $msg = "New Password is invalid, please use password of 8 or more in length";
+                    $msg = "New Password is invalid, please use a password of 12 or more characters in length";
                 }
                 else
                 {
@@ -41,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $isError = false;
                 }
             }
+        }
         }
 }
 
@@ -61,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php } ?>
                 <!--TODO Update CSS Classes, these refer to launch page -->
                 <form class="needs-validation" method="POST" action="changepassword" novalidate>
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(GenerateCSRFToken(), ENT_QUOTES); ?>">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" class="form-control" id="currentPassword" name="currentPassword" aria-describedby="currentPasswordHelp" required>
