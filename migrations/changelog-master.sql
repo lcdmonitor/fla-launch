@@ -66,3 +66,27 @@ UPDATE `User` SET `PasswordHash` = '$2y$10$ysnq4hHyBHFbeFI44gXp7OLXaAZHkp26Aklic
 --changeset dave:8-seed-sample-page
 INSERT INTO `Page` (`Title`, `PageKey`, `Summary`, `Content`, `MemberOnly`) VALUES ('Sample Page', 'sample_page', 'A sample page used for testing content rendering.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 0);
 --rollback DELETE FROM `Page` WHERE `PageKey` = 'sample_page';
+
+--changeset dave:9-create-gallerycategory-table
+CREATE TABLE `GalleryCategory` (
+    `CategoryID` INT NOT NULL AUTO_INCREMENT,
+    `Name` VARCHAR(255) NOT NULL,
+    `SortOrder` INT NOT NULL DEFAULT 0,
+    `Hidden` TINYINT(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`CategoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `GalleryCategory`;
+
+--changeset dave:10-create-galleryphoto-table
+CREATE TABLE `GalleryPhoto` (
+    `PhotoID` INT NOT NULL AUTO_INCREMENT,
+    `CategoryID` INT NOT NULL,
+    `FileName` VARCHAR(255) NOT NULL,
+    `ThumbFileName` VARCHAR(255) NOT NULL,
+    `SortOrder` INT NOT NULL DEFAULT 0,
+    `CreatedDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`PhotoID`),
+    KEY `IDX_GalleryPhoto_Category_Sort` (`CategoryID`, `SortOrder`),
+    CONSTRAINT `FK_GalleryPhoto_Category` FOREIGN KEY (`CategoryID`) REFERENCES `GalleryCategory` (`CategoryID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `GalleryPhoto`;

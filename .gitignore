@@ -2,3 +2,12 @@
 .env
 .env.*
 vendor/
+
+# Uploaded gallery photos/thumbnails are user content, not source - keep the
+# directory's .htaccess (blocks listing/PHP execution) and the sample thumb
+# tracked, ignore everything else under img/gallery/.
+img/gallery/*
+!img/gallery/.htaccess
+!img/gallery/thumbs/
+img/gallery/thumbs/*
+!img/gallery/thumbs/blacksquare.png

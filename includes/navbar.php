@@ -15,6 +15,9 @@
                     <li class="nav-item">
                         <a class="nav-link fs-5" href="/education"><i class="bi bi-book nav-space"></i>Education</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="/gallery"><i class="bi bi-images nav-space"></i>Gallery</a>
+                    </li>
                     <?php if (!GetIsUserLoggedIn()) { ?>
                         <li>
                             <a class="nav-link fs-5" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-key nav-space"></i>Login</a>

@@ -15,6 +15,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
             <UL style="padding: 3px; spacing: 3px; margin: 3px;">
                 <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/pages" class="btn btn-primary">Manage Pages</a></li>
                 <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/users" class="btn btn-primary">Manage Users</a></li>
+                <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/gallery" class="btn btn-primary">Manage Gallery</a></li>
             </UL>
         </div>
     </div>

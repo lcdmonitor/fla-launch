@@ -400,6 +400,264 @@ function DeletePageById($pageId)
     mysqli_stmt_close($stmt);
 }
 
+function ListGalleryCategories()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT CategoryID, Name, SortOrder, Hidden FROM GalleryCategory ORDER BY SortOrder";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $categories = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $categories[] = $row;
+    }
+
+    return $categories;
+}
+
+function ListVisibleGalleryCategories()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT CategoryID, Name, SortOrder, Hidden FROM GalleryCategory WHERE Hidden = 0 ORDER BY SortOrder";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $categories = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $categories[] = $row;
+    }
+
+    return $categories;
+}
+
+function GetGalleryCategoryById($categoryId)
+{
+
+    if (!isset($categoryId)) {
+        die("Error missing parameter value");
+    }
+
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT CategoryID, Name, SortOrder, Hidden FROM GalleryCategory WHERE (CategoryID = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $categoryId);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        $result = array(
+                    "CategoryID"=>$row["CategoryID"],
+                    "Name"=>$row["Name"],
+                    "SortOrder"=>$row["SortOrder"],
+                    "Hidden"=>$row["Hidden"]
+                );
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function CreateGalleryCategory($name, $sortOrder, $hidden)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "INSERT INTO GalleryCategory (Name, SortOrder, Hidden) VALUES (?, ?, ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    $hiddenInt = $hidden ? 1 : 0;
+
+    mysqli_stmt_bind_param($stmt, 'sii', $name, $sortOrder, $hiddenInt);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function UpdateGalleryCategoryById($categoryId, $name, $sortOrder, $hidden)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE GalleryCategory SET Name = ?, SortOrder = ?, Hidden = ? WHERE CategoryID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    $hiddenInt = $hidden ? 1 : 0;
+
+    mysqli_stmt_bind_param($stmt, 'siii', $name, $sortOrder, $hiddenInt, $categoryId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function DeleteGalleryCategoryById($categoryId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "DELETE FROM GalleryCategory WHERE CategoryID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $categoryId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function ListPhotosByCategory($categoryId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT PhotoID, CategoryID, FileName, ThumbFileName, SortOrder FROM GalleryPhoto WHERE CategoryID = ? ORDER BY SortOrder";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $categoryId);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $photos = array();
+
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $photos[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $photos;
+}
+
+function GetGalleryPhotoById($photoId)
+{
+
+    if (!isset($photoId)) {
+        die("Error missing parameter value");
+    }
+
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT PhotoID, CategoryID, FileName, ThumbFileName, SortOrder FROM GalleryPhoto WHERE (PhotoID = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $photoId);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        $result = array(
+                    "PhotoID"=>$row["PhotoID"],
+                    "CategoryID"=>$row["CategoryID"],
+                    "FileName"=>$row["FileName"],
+                    "ThumbFileName"=>$row["ThumbFileName"],
+                    "SortOrder"=>$row["SortOrder"]
+                );
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function CreateGalleryPhoto($categoryId, $fileName, $thumbFileName)
+{
+    $mysqli = GetDBConnection();
+
+    $sortSql = "SELECT COALESCE(MAX(SortOrder), -1) + 1 AS NextSortOrder FROM GalleryPhoto WHERE CategoryID = ?";
+    $sortStmt = mysqli_stmt_init($mysqli);
+    if (!mysqli_stmt_prepare($sortStmt, $sortSql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+    mysqli_stmt_bind_param($sortStmt, 'i', $categoryId);
+    mysqli_stmt_execute($sortStmt);
+    $sortResult = mysqli_fetch_assoc(mysqli_stmt_get_result($sortStmt));
+    mysqli_stmt_close($sortStmt);
+    $nextSortOrder = (int)$sortResult['NextSortOrder'];
+
+    $sql = "INSERT INTO GalleryPhoto (CategoryID, FileName, ThumbFileName, SortOrder) VALUES (?, ?, ?, ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'issi', $categoryId, $fileName, $thumbFileName, $nextSortOrder);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function UpdatePhotoSortOrder($photoId, $sortOrder)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE GalleryPhoto SET SortOrder = ? WHERE PhotoID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ii', $sortOrder, $photoId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function DeleteGalleryPhotoById($photoId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "DELETE FROM GalleryPhoto WHERE PhotoID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $photoId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
 function SendEmail($to, $to_name, $subject, $body, $alt_body)
 {
     $mail = new PHPMailer(true);

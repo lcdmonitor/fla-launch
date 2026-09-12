@@ -85,3 +85,17 @@ function confirmDeletePage(pageId, pageKey) {
         document.getElementById('deletePageForm').submit();
     }
 }
+
+function confirmDeleteGalleryCategory(categoryId, name) {
+    if (confirm('Delete category "' + name + '" and all its photos? This cannot be undone.')) {
+        document.getElementById('deleteGalleryCategoryId').value = categoryId;
+        document.getElementById('deleteGalleryCategoryForm').submit();
+    }
+}
+
+function confirmDeleteGalleryPhoto(photoId) {
+    if (confirm('Delete this photo? This cannot be undone.')) {
+        document.getElementById('deleteGalleryPhotoId').value = photoId;
+        document.getElementById('deleteGalleryPhotoForm').submit();
+    }
+}
