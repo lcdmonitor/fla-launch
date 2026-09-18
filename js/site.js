@@ -86,6 +86,23 @@ function confirmDeletePage(pageId, pageKey) {
     }
 }
 
+function copyPageLink(url, button) {
+    var originalHtml = button.innerHTML;
+
+    function showCopied() {
+        button.innerHTML = 'Copied!';
+        setTimeout(function () { button.innerHTML = originalHtml; }, 1500);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(showCopied, function () {
+            alert('Could not copy link.');
+        });
+    } else {
+        alert('Copy not supported in this browser. Link: ' + url);
+    }
+}
+
 function confirmDeleteGalleryCategory(categoryId, name) {
     if (confirm('Delete category "' + name + '" and all its photos? This cannot be undone.')) {
         document.getElementById('deleteGalleryCategoryId').value = categoryId;

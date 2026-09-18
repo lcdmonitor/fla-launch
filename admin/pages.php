@@ -4,6 +4,8 @@ RequireAuthentication(ROLE_ADMIN);
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
 $pages = ListPages();
+$urlScheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$siteBaseUrl = $urlScheme . '://' . $_SERVER['HTTP_HOST'];
 ?>
 <section class="hero">
     <div class="hero__overlay"></div>
@@ -19,6 +21,7 @@ $pages = ListPages();
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Page Key</th>
                                 <th>Summary</th>
                                 <th>Member Only</th>
@@ -27,8 +30,15 @@ $pages = ListPages();
                         </thead>
                         <tbody>
                             <?php foreach ($pages as $row) { ?>
+                                <?php $pageUrl = $siteBaseUrl . '/pages/' . rawurlencode($row['PageKey']); ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['PageKey'], ENT_QUOTES); ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" title="Copy link"
+                                                onclick="copyPageLink('<?php echo htmlspecialchars(addslashes($pageUrl), ENT_QUOTES); ?>', this)">
+                                            <i class="bi bi-clipboard"></i>
+                                        </button>
+                                    </td>
+                                    <td><a href="<?php echo htmlspecialchars($pageUrl, ENT_QUOTES); ?>" target="_blank" rel="noopener"><?php echo htmlspecialchars($row['PageKey'], ENT_QUOTES); ?></a></td>
                                     <td><?php echo htmlspecialchars($row['Summary'], ENT_QUOTES); ?></td>
                                     <td><?php echo $row['MemberOnly'] ? 'Yes' : 'No'; ?></td>
                                     <td>
