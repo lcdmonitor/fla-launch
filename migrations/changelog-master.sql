@@ -123,3 +123,29 @@ CREATE TABLE `PageHit` (
     KEY `IDX_PageHit_UserID` (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --rollback DROP TABLE `PageHit`;
+
+--changeset dave:15-create-passwordreset-table
+CREATE TABLE `PasswordReset` (
+    `ResetID` INT NOT NULL AUTO_INCREMENT,
+    `UserID` INT NOT NULL,
+    `TokenHash` CHAR(64) NOT NULL,
+    `CreatedDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `ExpiresDate` DATETIME NOT NULL,
+    `UsedDate` DATETIME NULL,
+    PRIMARY KEY (`ResetID`),
+    KEY `IDX_PasswordReset_TokenHash` (`TokenHash`),
+    CONSTRAINT `FK_PasswordReset_User` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `PasswordReset`;
+
+--changeset dave:16-create-passwordresetattempt-table
+CREATE TABLE `PasswordResetAttempt` (
+    `AttemptID` INT NOT NULL AUTO_INCREMENT,
+    `Email` VARCHAR(255) NOT NULL,
+    `IPAddress` VARCHAR(45) NOT NULL,
+    `AttemptTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`AttemptID`),
+    KEY `IDX_PasswordResetAttempt_Email_AttemptTime` (`Email`, `AttemptTime`),
+    KEY `IDX_PasswordResetAttempt_IPAddress_AttemptTime` (`IPAddress`, `AttemptTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `PasswordResetAttempt`;

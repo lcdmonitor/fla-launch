@@ -74,6 +74,9 @@ try {
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
+                        <div class="mb-3">
+                            <a href="/forgotpassword">Forgot password?</a>
+                        </div>
                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(GenerateCSRFToken(), ENT_QUOTES); ?>">
                     </div>
                     <div class="modal-footer">

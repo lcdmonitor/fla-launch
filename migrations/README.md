@@ -55,7 +55,7 @@ liquibase \
   --url="jdbc:mysql://${FLA_DB_HOST:-localhost}:${FLA_DB_PORT:-8889}/${FLA_DB_NAME:-web}" \
   --username="$FLA_DB_USER" \
   --password="$FLA_DB_PASS" \
-  rollback-count-sql --count=14
+  rollback-count-sql --count=16
 ```
 
 Roll back the whole thing (each changeset carries a `--rollback` statement):
@@ -67,7 +67,7 @@ liquibase \
   --url="jdbc:mysql://${FLA_DB_HOST:-localhost}:${FLA_DB_PORT:-8889}/${FLA_DB_NAME:-web}" \
   --username="$FLA_DB_USER" \
   --password="$FLA_DB_PASS" \
-  rollback-count --count=14
+  rollback-count --count=16
 ```
 
 ## Schema notes

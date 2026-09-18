@@ -883,6 +883,158 @@ function GetRecentPageHits($limit)
     return $rows;
 }
 
+function GetUserByEmail($email)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT UserID, Username, Email FROM User WHERE (Email = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        $result = array(
+                    "UserID"=>$row["UserID"],
+                    "Username"=>$row["Username"],
+                    "Email"=>$row["Email"]
+                );
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function CreatePasswordResetToken($userId)
+{
+    $mysqli = GetDBConnection();
+
+    $invalidateSql = "UPDATE PasswordReset SET UsedDate = NOW() WHERE UserID = ? AND UsedDate IS NULL";
+    $invalidateStmt = mysqli_stmt_init($mysqli);
+    if (!mysqli_stmt_prepare($invalidateStmt, $invalidateSql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+    mysqli_stmt_bind_param($invalidateStmt, 'i', $userId);
+    mysqli_stmt_execute($invalidateStmt);
+    mysqli_stmt_close($invalidateStmt);
+
+    $rawToken = bin2hex(random_bytes(32));
+    $tokenHash = hash('sha256', $rawToken);
+
+    $sql = "INSERT INTO PasswordReset (UserID, TokenHash, ExpiresDate) VALUES (?, ?, NOW() + INTERVAL 1 HOUR)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'is', $userId, $tokenHash);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $rawToken;
+}
+
+function ValidatePasswordResetToken($token)
+{
+    $mysqli = GetDBConnection();
+
+    $tokenHash = hash('sha256', $token);
+
+    $sql = "SELECT pr.ResetID, u.Username FROM PasswordReset pr
+            JOIN User u ON u.UserID = pr.UserID
+            WHERE pr.TokenHash = ? AND pr.UsedDate IS NULL AND pr.ExpiresDate > NOW()";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $tokenHash);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        $result = array(
+                    "ResetID"=>$row["ResetID"],
+                    "Username"=>$row["Username"]
+                );
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function MarkPasswordResetTokenUsed($resetId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE PasswordReset SET UsedDate = NOW() WHERE ResetID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $resetId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function RecordPasswordResetAttempt($email, $ipAddress)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "INSERT INTO PasswordResetAttempt (Email, IPAddress) VALUES (?, ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ss', $email, $ipAddress);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function IsPasswordResetLocked($email, $ipAddress)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT COUNT(*) AS AttemptCount FROM PasswordResetAttempt
+            WHERE AttemptTime > (NOW() - INTERVAL 15 MINUTE)
+              AND (Email = ? OR IPAddress = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ss', $email, $ipAddress);
+    mysqli_stmt_execute($stmt);
+    $row = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+    mysqli_stmt_close($stmt);
+
+    return ((int)$row['AttemptCount']) >= 3;
+}
+
 function SendEmail($to, $to_name, $subject, $body, $alt_body)
 {
     $mail = new PHPMailer(true);
@@ -902,13 +1054,13 @@ function SendEmail($to, $to_name, $subject, $body, $alt_body)
 
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = $EMAIL_SERVER;                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = false;                                   //Enable SMTP authentication
-        //$mail->Username   = $EMAIL_USER;                     //SMTP username
-        //$mail->Password   = $EMAIL_PASSWORD;                               //SMTP password
-        //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-        $mail->SMTPAutoTLS = false; //TODO fix hacks and make secure
-        $mail->SMTPSecure  = false;
-        $mail->Port       = 25;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->SMTPAuth   = true;                                    //Enable SMTP authentication
+        $mail->Username   = $EMAIL_USER;                     //SMTP username
+        $mail->Password   = $EMAIL_PASSWORD;                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable STARTTLS encryption
+        $mail->SMTPAutoTLS = true;
+        $mail->Port       = 587;                                    //TCP port to connect to; 587 for STARTTLS
+        $mail->Timeout    = 10;                                     //Fail fast rather than hanging until the web server's own request timeout kills the process uncatchably
     
         //Recipients
         $mail->setFrom($EMAIL_FROM, $EMAIL_FROM_NAME);
@@ -933,8 +1085,10 @@ function SendEmail($to, $to_name, $subject, $body, $alt_body)
         if ($EMAIL_DEBUG) {
             echo 'Message has been sent';
         }
+        return true;
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        error_log("SendEmail failed: " . $mail->ErrorInfo);
+        return false;
     }
 }
 
