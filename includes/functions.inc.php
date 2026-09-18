@@ -705,6 +705,184 @@ function UpdateNewsAlertContent($content)
     mysqli_stmt_close($stmt);
 }
 
+function RecordPageHit()
+{
+    $mysqli = GetDBConnection();
+
+    $userId = isset($_SESSION['UserID']) ? (int)$_SESSION['UserID'] : null;
+    $username = $_SESSION['Username'] ?? null;
+    $requestUrl = $_SERVER['REQUEST_URI'] ?? '';
+    $referrer = $_SERVER['HTTP_REFERER'] ?? null;
+    $ipAddress = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+
+    $sql = "INSERT INTO PageHit (UserID, Username, RequestUrl, Referrer, IPAddress, UserAgent) VALUES (?, ?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'isssss', $userId, $username, $requestUrl, $referrer, $ipAddress, $userAgent);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function GetPageHitCountByDay($days)
+{
+    $mysqli = GetDBConnection();
+
+    if ($days > 0) {
+        $sql = "SELECT DATE(HitTime) AS HitDate, COUNT(*) AS HitCount FROM PageHit WHERE HitTime >= (NOW() - INTERVAL ? DAY) GROUP BY HitDate ORDER BY HitDate DESC";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+        mysqli_stmt_bind_param($stmt, 'i', $days);
+    } else {
+        $sql = "SELECT DATE(HitTime) AS HitDate, COUNT(*) AS HitCount FROM PageHit GROUP BY HitDate ORDER BY HitDate DESC";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $rows[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $rows;
+}
+
+function GetPageHitCountByUser($days)
+{
+    $mysqli = GetDBConnection();
+
+    if ($days > 0) {
+        $sql = "SELECT COALESCE(Username, 'Guest') AS UserLabel, COUNT(*) AS HitCount FROM PageHit WHERE HitTime >= (NOW() - INTERVAL ? DAY) GROUP BY UserLabel ORDER BY HitCount DESC";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+        mysqli_stmt_bind_param($stmt, 'i', $days);
+    } else {
+        $sql = "SELECT COALESCE(Username, 'Guest') AS UserLabel, COUNT(*) AS HitCount FROM PageHit GROUP BY UserLabel ORDER BY HitCount DESC";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $rows[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $rows;
+}
+
+function GetPageHitCountByUserAgent($days)
+{
+    $mysqli = GetDBConnection();
+
+    if ($days > 0) {
+        $sql = "SELECT COALESCE(UserAgent, 'Unknown') AS UserAgentLabel, COUNT(*) AS HitCount FROM PageHit WHERE HitTime >= (NOW() - INTERVAL ? DAY) GROUP BY UserAgentLabel ORDER BY HitCount DESC LIMIT 20";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+        mysqli_stmt_bind_param($stmt, 'i', $days);
+    } else {
+        $sql = "SELECT COALESCE(UserAgent, 'Unknown') AS UserAgentLabel, COUNT(*) AS HitCount FROM PageHit GROUP BY UserAgentLabel ORDER BY HitCount DESC LIMIT 20";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $rows[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $rows;
+}
+
+function GetPageHitCountByReferrer($days)
+{
+    $mysqli = GetDBConnection();
+
+    if ($days > 0) {
+        $sql = "SELECT COALESCE(Referrer, 'Direct / None') AS ReferrerLabel, COUNT(*) AS HitCount FROM PageHit WHERE HitTime >= (NOW() - INTERVAL ? DAY) GROUP BY ReferrerLabel ORDER BY HitCount DESC LIMIT 20";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+        mysqli_stmt_bind_param($stmt, 'i', $days);
+    } else {
+        $sql = "SELECT COALESCE(Referrer, 'Direct / None') AS ReferrerLabel, COUNT(*) AS HitCount FROM PageHit GROUP BY ReferrerLabel ORDER BY HitCount DESC LIMIT 20";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $rows[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $rows;
+}
+
+function GetRecentPageHits($limit)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT HitTime, UserID, Username, RequestUrl, Referrer, IPAddress, UserAgent FROM PageHit ORDER BY HitTime DESC LIMIT ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $limit);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $rows[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $rows;
+}
+
 function SendEmail($to, $to_name, $subject, $body, $alt_body)
 {
     $mail = new PHPMailer(true);

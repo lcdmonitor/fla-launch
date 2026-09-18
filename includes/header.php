@@ -1,6 +1,11 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/includes/functions.inc.php');
 StartSecureSession();
+try {
+    RecordPageHit();
+} catch (mysqli_sql_exception $e) {
+    // Analytics logging must never break page rendering.
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
