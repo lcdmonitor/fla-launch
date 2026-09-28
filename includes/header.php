@@ -77,6 +77,9 @@ try {
                         <div class="mb-3">
                             <a href="/forgotpassword">Forgot password?</a>
                         </div>
+                        <div class="mb-3">
+                            <a href="/register">Don't have an account? Register</a>
+                        </div>
                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(GenerateCSRFToken(), ENT_QUOTES); ?>">
                     </div>
                     <div class="modal-footer">

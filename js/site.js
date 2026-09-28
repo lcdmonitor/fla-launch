@@ -103,6 +103,10 @@ function copyPageLink(url, button) {
     }
 }
 
+function refreshCaptcha(imgId) {
+    document.getElementById(imgId).src = '/captcha.php?' + Date.now();
+}
+
 function confirmDeleteGalleryCategory(categoryId, name) {
     if (confirm('Delete category "' + name + '" and all its photos? This cannot be undone.')) {
         document.getElementById('deleteGalleryCategoryId').value = categoryId;
