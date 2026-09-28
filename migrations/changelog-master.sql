@@ -149,3 +149,49 @@ CREATE TABLE `PasswordResetAttempt` (
     KEY `IDX_PasswordResetAttempt_IPAddress_AttemptTime` (`IPAddress`, `AttemptTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --rollback DROP TABLE `PasswordResetAttempt`;
+
+--changeset dave:17-create-membershiptype-table
+CREATE TABLE `MembershipType` (
+    `MembershipTypeID` INT NOT NULL AUTO_INCREMENT,
+    `Name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`MembershipTypeID`),
+    UNIQUE KEY `UK_MembershipType_Name` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `MembershipType`;
+
+--changeset dave:18-seed-membershiptypes
+INSERT INTO `MembershipType` (`MembershipTypeID`, `Name`) VALUES (1, 'Guest');
+INSERT INTO `MembershipType` (`MembershipTypeID`, `Name`) VALUES (2, 'Jr Member');
+INSERT INTO `MembershipType` (`MembershipTypeID`, `Name`) VALUES (3, 'Sr Member');
+INSERT INTO `MembershipType` (`MembershipTypeID`, `Name`) VALUES (4, 'Board Member');
+--rollback DELETE FROM `MembershipType` WHERE `MembershipTypeID` IN (1,2,3,4);
+
+--changeset dave:19-create-duesstatus-table
+CREATE TABLE `DuesStatus` (
+    `DuesStatusID` INT NOT NULL AUTO_INCREMENT,
+    `Name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`DuesStatusID`),
+    UNIQUE KEY `UK_DuesStatus_Name` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--rollback DROP TABLE `DuesStatus`;
+
+--changeset dave:20-seed-duesstatuses
+INSERT INTO `DuesStatus` (`DuesStatusID`, `Name`) VALUES (1, 'Paid');
+INSERT INTO `DuesStatus` (`DuesStatusID`, `Name`) VALUES (2, 'Unpaid');
+INSERT INTO `DuesStatus` (`DuesStatusID`, `Name`) VALUES (3, 'Overdue');
+--rollback DELETE FROM `DuesStatus` WHERE `DuesStatusID` IN (1,2,3);
+
+--changeset dave:21-alter-user-add-profile-fields
+ALTER TABLE `User`
+    ADD COLUMN `AddressLine1` VARCHAR(255) NULL,
+    ADD COLUMN `AddressLine2` VARCHAR(255) NULL,
+    ADD COLUMN `City` VARCHAR(255) NULL,
+    ADD COLUMN `State` VARCHAR(2) NULL,
+    ADD COLUMN `Zip` VARCHAR(10) NULL,
+    ADD COLUMN `Phone` VARCHAR(12) NULL,
+    ADD COLUMN `MembershipTypeID` INT NULL,
+    ADD COLUMN `DuesPaidDate` DATE NULL,
+    ADD COLUMN `DuesStatusID` INT NULL,
+    ADD CONSTRAINT `FK_User_MembershipType` FOREIGN KEY (`MembershipTypeID`) REFERENCES `MembershipType` (`MembershipTypeID`),
+    ADD CONSTRAINT `FK_User_DuesStatus` FOREIGN KEY (`DuesStatusID`) REFERENCES `DuesStatus` (`DuesStatusID`);
+--rollback ALTER TABLE `User` DROP FOREIGN KEY `FK_User_MembershipType`, DROP FOREIGN KEY `FK_User_DuesStatus`, DROP COLUMN `AddressLine1`, DROP COLUMN `AddressLine2`, DROP COLUMN `City`, DROP COLUMN `State`, DROP COLUMN `Zip`, DROP COLUMN `Phone`, DROP COLUMN `MembershipTypeID`, DROP COLUMN `DuesPaidDate`, DROP COLUMN `DuesStatusID`;

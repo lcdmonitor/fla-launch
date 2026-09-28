@@ -133,6 +133,22 @@ function ListRoles()
     }
 }
 
+function GetAllRoles()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT RoleID, Rolename FROM Role ORDER BY RoleID";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+
+    return $rows;
+}
+
 function CreateUser($username, $fullname, $email, $password, $roleid)
 {
     if (!isset($username) || !isset($fullname) || !isset($email) || !isset($password) || !isset($roleid)) {
@@ -912,6 +928,164 @@ function GetUserByEmail($email)
     mysqli_stmt_close($stmt);
 
     return $result;
+}
+
+function GetUserById($userId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT UserID, Username, FullName, Email, RoleID, AddressLine1, AddressLine2, City, State, Zip, Phone, MembershipTypeID, DuesPaidDate, DuesStatusID FROM User WHERE (UserID = ?)";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $userId);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $result = false;
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        $result = array(
+                    "UserID"=>$row["UserID"],
+                    "Username"=>$row["Username"],
+                    "FullName"=>$row["FullName"],
+                    "Email"=>$row["Email"],
+                    "RoleID"=>$row["RoleID"],
+                    "AddressLine1"=>$row["AddressLine1"],
+                    "AddressLine2"=>$row["AddressLine2"],
+                    "City"=>$row["City"],
+                    "State"=>$row["State"],
+                    "Zip"=>$row["Zip"],
+                    "Phone"=>$row["Phone"],
+                    "MembershipTypeID"=>$row["MembershipTypeID"],
+                    "DuesPaidDate"=>$row["DuesPaidDate"],
+                    "DuesStatusID"=>$row["DuesStatusID"]
+                );
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function ListUsers($search)
+{
+    $mysqli = GetDBConnection();
+
+    if ($search !== null && $search !== '') {
+        $sql = "SELECT UserID, Username, FullName, Email, RoleID, MembershipTypeID, DuesStatusID FROM User
+                WHERE Username LIKE ? OR FullName LIKE ? OR Email LIKE ? ORDER BY Username";
+        $likeSearch = '%' . $search . '%';
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+        mysqli_stmt_bind_param($stmt, 'sss', $likeSearch, $likeSearch, $likeSearch);
+    } else {
+        $sql = "SELECT UserID, Username, FullName, Email, RoleID, MembershipTypeID, DuesStatusID FROM User ORDER BY Username";
+        $stmt = mysqli_stmt_init($mysqli);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            die("Error: Statement Failed to Prepare");
+        }
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $rows[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $rows;
+}
+
+function UpdateUserProfile($userId, $addressLine1, $addressLine2, $city, $state, $zip, $phone)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE User SET AddressLine1 = ?, AddressLine2 = ?, City = ?, State = ?, Zip = ?, Phone = ? WHERE UserID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ssssssi', $addressLine1, $addressLine2, $city, $state, $zip, $phone, $userId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function UpdateUserByAdmin($userId, $fullname, $email, $roleId, $addressLine1, $addressLine2, $city, $state, $zip, $phone, $membershipTypeId, $duesPaidDate, $duesStatusId)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE User SET FullName = ?, Email = ?, RoleID = ?, AddressLine1 = ?, AddressLine2 = ?, City = ?, State = ?, Zip = ?, Phone = ?, MembershipTypeID = ?, DuesPaidDate = ?, DuesStatusID = ? WHERE UserID = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        'ssissssssisii',
+        $fullname,
+        $email,
+        $roleId,
+        $addressLine1,
+        $addressLine2,
+        $city,
+        $state,
+        $zip,
+        $phone,
+        $membershipTypeId,
+        $duesPaidDate,
+        $duesStatusId,
+        $userId
+    );
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+function ListMembershipTypes()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT MembershipTypeID, Name FROM MembershipType ORDER BY MembershipTypeID";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+
+    return $rows;
+}
+
+function ListDuesStatuses()
+{
+    $mysqli = GetDBConnection();
+
+    $query = "SELECT DuesStatusID, Name FROM DuesStatus ORDER BY DuesStatusID";
+
+    $result = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+    $rows = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+
+    return $rows;
 }
 
 function CreatePasswordResetToken($userId)

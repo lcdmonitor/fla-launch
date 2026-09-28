@@ -29,9 +29,6 @@ Before deploying to production environment with SSL you must uncomment the follo
 
 ## TODO List
 1. User Management - Member Registration
-4. Account Management - Update Account (Name, Email, etc)
-6. Account Management - Reset Password / Forgot Password
-7. Account Managmeent - Update Profile
 13. Content Mangement - Dynamic Front Page Content
 15. General - CSS Cleanup
 
