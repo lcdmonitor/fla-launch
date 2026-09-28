@@ -721,6 +721,43 @@ function UpdateNewsAlertContent($content)
     mysqli_stmt_close($stmt);
 }
 
+function GetSiteContent($contentKey)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "SELECT Content FROM SiteContent WHERE ContentKey = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $contentKey);
+    mysqli_stmt_execute($stmt);
+    $row = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+    mysqli_stmt_close($stmt);
+
+    return $row ? $row['Content'] : false;
+}
+
+function UpdateSiteContent($contentKey, $content)
+{
+    $mysqli = GetDBConnection();
+
+    $sql = "UPDATE SiteContent SET Content = ? WHERE ContentKey = ?";
+
+    $stmt = mysqli_stmt_init($mysqli);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        die("Error: Statement Failed to Prepare");
+    }
+
+    mysqli_stmt_bind_param($stmt, 'ss', $content, $contentKey);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
 function RecordPageHit()
 {
     $mysqli = GetDBConnection();

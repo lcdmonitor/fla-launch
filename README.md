@@ -28,9 +28,7 @@ Before deploying to production environment with SSL you must uncomment the follo
 `#RewriteRule ^(.*)$ https://www.flalaunch.com/$1 [R,L`
 
 ## TODO List
-1. User Management - Member Registration
 13. Content Mangement - Dynamic Front Page Content
-15. General - CSS Cleanup
 
 
 Run Migrations:

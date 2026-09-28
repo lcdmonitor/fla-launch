@@ -1,4 +1,8 @@
-<?php require($_SERVER['DOCUMENT_ROOT'] .'/includes/header.php'); ?>
+<?php
+require($_SERVER['DOCUMENT_ROOT'] .'/includes/header.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/includes/bbcode.inc.php');
+$pageContent = GetSiteContent('education');
+?>
 <!--education Section-->
 <section class="hero">
     <div class="hero__overlay"></div>
@@ -9,10 +13,14 @@
         <div class="d-flex h-100 align-items-center education__content-width">
             <div class="text-black bg-light p-5 rounded-3 education__content">
                 <h1 class="education__heading">Mission: Education</h1>
-                <p>Bringing North Florida one step closer to the stars...</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore voluptatum earum possimus, ipsum atque sint, vel iusto impedit non architecto, tempora saepe quos quia id accusantium. Fugit nesciunt explicabo dolore!</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dignissimos magni culpa labore dolor dolorum ipsam, totam eum debitis quo pariatur nihil omnis excepturi ullam magnam nostrum, reiciendis fugiat esse?</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim minima nesciunt provident quis quisquam modi asperiores sed eaque nobis quae impedit optio, quos adipisci hic. Sequi mollitia temporibus facere quia.</p>
+                <?php
+                if ($pageContent) {
+                    $parser = new JBBCode\Parser();
+                    $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+                    $parser->parse($pageContent);
+                    echo $parser->getAsHTML();
+                }
+                ?>
                 <button type="button" class="mt-2 btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Coming Soon
                 </button>

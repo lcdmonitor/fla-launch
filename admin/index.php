@@ -18,6 +18,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
                 <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/gallery" class="btn btn-primary">Manage Gallery</a></li>
                 <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/newsalert" class="btn btn-primary">Manage News Alert</a></li>
                 <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/stats" class="btn btn-primary">View Stats</a></li>
+                <li style="padding: 3px; spacing: 3px; margin: 3px;"><a href="/admin/sitecontent" class="btn btn-primary">Manage Site Content</a></li>
             </UL>
         </div>
     </div>
