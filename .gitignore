@@ -3,6 +3,10 @@
 .env.*
 vendor/
 
+# Non-sample copy of the env template below - in case anyone copies it
+# locally to jot down real values, that filename is never committed.
+_config/env.ini
+
 # Uploaded gallery photos/thumbnails are user content, not source - keep the
 # directory's .htaccess (blocks listing/PHP execution) and the sample thumb
 # tracked, ignore everything else under img/gallery/.

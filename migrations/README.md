@@ -20,7 +20,7 @@ Every command below passes `--classpath` pointing at that jar so Liquibase can f
 
 ## Running the migration
 
-Uses the same `FLA_DB_*` environment variables the app itself reads (see the root [README.md](../README.md) and [CLAUDE.md](../CLAUDE.md)) — no separate credential setup.
+Uses the same `FLA_DB_*` environment variables the app itself reads (see the root [README.md](../README.md) and [CLAUDE.md](../CLAUDE.md)) — no separate credential setup. A copy-paste-able template listing every required/optional variable (placeholder values only) lives at [`_config/env.sample.ini`](../_config/env.sample.ini).
 
 Preview the SQL Liquibase would run, without touching the database:
 
