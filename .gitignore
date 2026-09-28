@@ -2,6 +2,7 @@
 .env
 .env.*
 vendor/
+.htaccess.prod
 
 # Non-sample copy of the env template below - in case anyone copies it
 # locally to jot down real values, that filename is never committed.
