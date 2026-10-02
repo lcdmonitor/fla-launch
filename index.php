@@ -63,7 +63,7 @@
 <section class="content_sections container-custom">
     <div class="row">
         <div class="col-12 col-sm-6 d-md-flex justify-content-md-center">
-            <img src="/img/shuttle.jpg" class="/img-fluid pb-4 content_section_thumbnail" height="470" width="300" loading="lazy" />
+            <img src="/img/F32-J.jpeg" class="/img-fluid pb-4 content_section_thumbnail" height="470" width="300" loading="lazy" />
         </div>
         <div class="col-12 col-sm-6 align-self-center justify-content-md-center">
             <div class="content_sections__content-width">
